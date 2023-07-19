@@ -6,7 +6,7 @@ public class Checkout : ICheckout
     /// <summary>
     /// Initializes a new instance of <see cref="Checkout"/>.
     /// </summary>
-    public Checkout()
+    public Checkout(SkuPriceService skuPriceService)
     {
         Items = new List<string>();
     }

@@ -2,18 +2,32 @@
 
 public class CheckoutTests
 {
+    private readonly Checkout _checkout;
+    
+    public CheckoutTests()
+    {
+        var skuPrices = new List<SkuPrice>()
+        {
+            new SkuPrice("A", 9.99m),
+            new SkuPrice("B", 15m),
+            new SkuPrice("C", 60m),
+        };
+
+        var skuPriceService = new SkuPriceService(skuPrices);
+        _checkout = new Checkout(skuPriceService);
+    }
+    
     [Fact]
     public void Scan_SingleItem_AddedToCheckout()
     {
         // Arrange
         var item = "A";
-        var checkout = new Checkout();
 
         // Act
-        checkout.Scan(item);
+        _checkout.Scan(item);
 
         // Assert
-        List<string> items = checkout.Items;
+        List<string> items = _checkout.Items;
         Assert.Single(items);
         Assert.Equal(item, items[0]);
     }
@@ -24,14 +38,13 @@ public class CheckoutTests
         // Arrange
         var item0 = "A";
         var item1 = "A";
-        var checkout = new Checkout();
 
         // Act
-        checkout.Scan(item0);
-        checkout.Scan(item1);
+        _checkout.Scan(item0);
+        _checkout.Scan(item1);
 
         // Assert
-        List<string> items = checkout.Items;
+        List<string> items = _checkout.Items;
         Assert.Equal(2, items.Count);
         Assert.Equal(item0, items[0]);
         Assert.Equal(item1, items[1]);
@@ -44,15 +57,14 @@ public class CheckoutTests
         var item0 = "A";
         var item1 = "B";
         var item2 = "C";
-        var checkout = new Checkout();
 
         // Act
-        checkout.Scan(item0);
-        checkout.Scan(item1);
-        checkout.Scan(item2);
+        _checkout.Scan(item0);
+        _checkout.Scan(item1);
+        _checkout.Scan(item2);
 
         // Assert
-        List<string> items = checkout.Items;
+        List<string> items = _checkout.Items;
         Assert.Equal(3, items.Count);
         Assert.Equal(item0, items[0]);
         Assert.Equal(item1, items[1]);
@@ -63,10 +75,9 @@ public class CheckoutTests
     public void GetTotalPrice_EmptyCart_ReturnsZero()
     {
         // Arrange
-        var checkout = new Checkout();
 
         // Act
-        decimal totalPrice = checkout.GetTotalPrice();
+        decimal totalPrice = _checkout.GetTotalPrice();
 
         // Assert
         Assert.Equal(0, totalPrice);
@@ -76,15 +87,14 @@ public class CheckoutTests
     public void GetTotalPrice_ItemsWithNoOffers_CalculatesBasicPrice()
     {
         // Arrange
-        var checkout = new Checkout();
-        checkout.Scan("A");
-        checkout.Scan("B");
-        checkout.Scan("C");
+        _checkout.Scan("A");
+        _checkout.Scan("B");
+        _checkout.Scan("C");
 
         // Act
-        decimal totalPrice = checkout.GetTotalPrice();
+        decimal totalPrice = _checkout.GetTotalPrice();
 
         // Assert
-        Assert.Equal(0, totalPrice);
+        Assert.Equal(84.99m, totalPrice);
     }
 }
