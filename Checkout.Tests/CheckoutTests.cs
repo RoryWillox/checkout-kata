@@ -97,4 +97,14 @@ public class CheckoutTests
         // Assert
         Assert.Equal(84.99m, totalPrice);
     }
+    
+    [Fact]
+    public void GetTotalPrice_ItemWithNoPrice_ThrowsInvalidOperationException()
+    {
+        // Arrange
+        _checkout.Scan("D");
+
+        // Act & Assert
+        Assert.Throws<InvalidOperationException>(() => _checkout.GetTotalPrice());
+    }
 }
