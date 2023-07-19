@@ -6,4 +6,9 @@ public class SkuPriceService
     {
         
     }
+
+    public decimal? GetPrice(string item)
+    {
+        throw new NotImplementedException();
+    }
 }
