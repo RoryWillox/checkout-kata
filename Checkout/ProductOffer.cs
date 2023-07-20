@@ -13,6 +13,12 @@ public record ProductOffer
     /// <param name="specialPrice">Price of the products after offer is applied.</param>
     public ProductOffer(string sku, int quantity, decimal specialPrice)
     {
+        if (quantity <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(quantity), quantity,
+                "Quantity must be a positive value greater than 0.");
+        }
+        
         Sku = sku;
         Quantity = quantity;
         SpecialPrice = specialPrice;
