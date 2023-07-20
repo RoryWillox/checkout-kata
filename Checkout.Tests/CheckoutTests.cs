@@ -8,9 +8,10 @@ public class CheckoutTests
     {
         var skuPrices = new List<SkuPrice>()
         {
-            new SkuPrice("A", 9.99m),
-            new SkuPrice("B", 15m),
-            new SkuPrice("C", 60m),
+            new SkuPrice("A", 50),
+            new SkuPrice("B", 30),
+            new SkuPrice("C", 20),
+            new SkuPrice("D", 15),
         };
 
         var skuPriceService = new SkuPriceService(skuPrices);
@@ -90,19 +91,20 @@ public class CheckoutTests
         _checkout.Scan("A");
         _checkout.Scan("B");
         _checkout.Scan("C");
+        _checkout.Scan("D");
 
         // Act
         decimal totalPrice = _checkout.GetTotalPrice();
 
         // Assert
-        Assert.Equal(84.99m, totalPrice);
+        Assert.Equal(115, totalPrice);
     }
     
     [Fact]
     public void GetTotalPrice_ItemWithNoPrice_ThrowsInvalidOperationException()
     {
         // Arrange
-        _checkout.Scan("D");
+        _checkout.Scan("E");
 
         // Act & Assert
         Assert.Throws<InvalidOperationException>(() => _checkout.GetTotalPrice());
