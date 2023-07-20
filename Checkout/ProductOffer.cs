@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a special offer for a product.
 /// </summary>
-public class ProductOffer
+public record ProductOffer
 {
     /// <summary>
     /// Initializes a new instance of <see cref="ProductOffer"/>.

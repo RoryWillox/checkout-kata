@@ -26,7 +26,7 @@ public class ProductOfferServiceTests
         // Assert
         Assert.Single(productOffers);
         var expectedProductOffer = new ProductOffer("A", 3, 130m);
-        Assert.Equivalent(expectedProductOffer, productOffers[0], true);
+        Assert.Equal(expectedProductOffer, productOffers[0]);
     }
     
     [Fact]

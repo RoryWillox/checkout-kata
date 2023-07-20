@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents the unit price of product.
 /// </summary>
-public class SkuPrice
+public record SkuPrice
 {
     /// <summary>
     /// Initializes a new instance of <see cref="SkuPrice"/>.
