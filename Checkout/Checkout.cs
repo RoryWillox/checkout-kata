@@ -4,13 +4,15 @@
 public class Checkout : ICheckout
 {
     private readonly ISkuPriceService _skuPriceService;
+    private readonly IProductOfferService _productOfferService;
     
     /// <summary>
     /// Initializes a new instance of <see cref="Checkout"/>.
     /// </summary>
-    public Checkout(ISkuPriceService skuPriceService)
+    public Checkout(ISkuPriceService skuPriceService, IProductOfferService productOfferService)
     {
         _skuPriceService = skuPriceService;
+        _productOfferService = productOfferService;
         Items = new List<string>();
     }
     

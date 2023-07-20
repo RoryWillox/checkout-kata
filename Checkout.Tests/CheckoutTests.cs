@@ -15,7 +15,16 @@ public class CheckoutTests
         };
 
         var skuPriceService = new SkuPriceService(skuPrices);
-        _checkout = new Checkout(skuPriceService);
+
+        var productOffers = new List<ProductOffer>()
+        {
+            new ProductOffer("A", 3, 130m),
+            new ProductOffer("B", 2, 45m),
+        };
+
+        var productOfferService = new ProductOfferService(productOffers);
+        
+        _checkout = new Checkout(skuPriceService, productOfferService);
     }
     
     [Fact]
