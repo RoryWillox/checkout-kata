@@ -3,12 +3,12 @@
 /// <inheritdoc cref="ICheckout"/>
 public class Checkout : ICheckout
 {
-    private readonly SkuPriceService _skuPriceService;
+    private readonly ISkuPriceService _skuPriceService;
     
     /// <summary>
     /// Initializes a new instance of <see cref="Checkout"/>.
     /// </summary>
-    public Checkout(SkuPriceService skuPriceService)
+    public Checkout(ISkuPriceService skuPriceService)
     {
         _skuPriceService = skuPriceService;
         Items = new List<string>();

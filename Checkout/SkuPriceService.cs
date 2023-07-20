@@ -1,9 +1,7 @@
 ﻿namespace Checkout;
 
-/// <summary>
-/// Represents a service to retrieve the unit price of a product.
-/// </summary>
-public class SkuPriceService
+/// <inheritdoc cref="ISkuPriceService"/>
+public class SkuPriceService : ISkuPriceService
 {
     private readonly Dictionary<string, decimal> _skuPrices;
     
@@ -16,11 +14,6 @@ public class SkuPriceService
         _skuPrices = skuPrices.ToDictionary(sp => sp.Sku, sp => sp.Price);
     }
 
-    /// <summary>
-    /// Get the unit price of an item.
-    /// </summary>
-    /// <param name="item">SKU of the item.</param>
-    /// <returns>Unit price of the product or null if no pricing information.</returns>
     public decimal? GetPrice(string item)
     {
         if (!_skuPrices.ContainsKey(item))
