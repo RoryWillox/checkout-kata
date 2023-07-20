@@ -109,4 +109,73 @@ public class CheckoutTests
         // Act & Assert
         Assert.Throws<InvalidOperationException>(() => _checkout.GetTotalPrice());
     }
+    
+    [Fact]
+    public void GetTotalPrice_ItemsWithOffer_CalculatesReducedPrice()
+    {
+        // Arrange
+        _checkout.Scan("A");
+        _checkout.Scan("A");
+        _checkout.Scan("A");
+
+        // Act 
+        decimal totalPrice = _checkout.GetTotalPrice();
+        
+        // Assert
+        Assert.Equal(130m, totalPrice);
+    }
+    
+    [Fact]
+    public void GetTotalPrice_ItemsWithOfferAppliesTwice_CalculatesReducedPrice()
+    {
+        // Arrange
+        _checkout.Scan("B");
+        _checkout.Scan("B");
+        _checkout.Scan("B");
+        _checkout.Scan("B");
+
+        // Act 
+        decimal totalPrice = _checkout.GetTotalPrice();
+        
+        // Assert
+        Assert.Equal(90m, totalPrice);
+    }
+    
+    [Fact]
+    public void GetTotalPrice_MultipleItemsInOrderWithOffers_CalculatesReducedPrice()
+    {
+        // Arrange
+        _checkout.Scan("A");
+        _checkout.Scan("A");
+        _checkout.Scan("A");
+        _checkout.Scan("B");
+        _checkout.Scan("B");
+        _checkout.Scan("C");
+        _checkout.Scan("D");
+
+        // Act 
+        decimal totalPrice = _checkout.GetTotalPrice();
+        
+        // Assert
+        Assert.Equal(210m, totalPrice);
+    }
+    
+    [Fact]
+    public void GetTotalPrice_MultipleItemsOutOfOrderWithOffers_CalculatesReducedPrice()
+    {
+        // Arrange
+        _checkout.Scan("A");
+        _checkout.Scan("C");
+        _checkout.Scan("B");
+        _checkout.Scan("A");
+        _checkout.Scan("B");
+        _checkout.Scan("D");
+        _checkout.Scan("A");
+
+        // Act 
+        decimal totalPrice = _checkout.GetTotalPrice();
+        
+        // Assert
+        Assert.Equal(210m, totalPrice);
+    }
 }
