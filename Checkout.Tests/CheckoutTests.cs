@@ -187,4 +187,35 @@ public class CheckoutTests
         // Assert
         Assert.Equal(210m, totalPrice);
     }
+    
+    [Fact]
+    public void GetTotalPrice_SingleItemWithMultipleOffers_CalculatesReducedPrice()
+    {
+        // Arrange
+        var skuPrices = new List<SkuPrice>()
+        {
+            new SkuPrice("A", 50),
+        };
+        var skuPriceService = new SkuPriceService(skuPrices);
+
+        var productOffers = new List<ProductOffer>()
+        {
+            new ProductOffer("A", 3, 130m),
+            new ProductOffer("A", 5, 200m),
+        };
+        var productOfferService = new ProductOfferService(productOffers);
+        
+        var checkout = new Checkout(skuPriceService, productOfferService);
+
+        for (int i = 0; i < 8; i++)
+        {
+            checkout.Scan("A");
+        }
+
+        // Act 
+        decimal totalPrice = checkout.GetTotalPrice();
+        
+        // Assert
+        Assert.Equal(330m, totalPrice);
+    }
 }

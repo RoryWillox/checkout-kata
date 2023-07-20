@@ -14,6 +14,9 @@ public interface ICheckout
     /// Calculate the total price of the items in the checkout.
     /// </summary>
     /// <returns>Total price of items in the checkout.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Throws <see cref="InvalidOperationException"/> when no pricing information is found for a scanned product.
+    /// </exception>
     decimal GetTotalPrice();
     
     /// <summary>
